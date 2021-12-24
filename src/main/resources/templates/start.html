@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake</title>
+<!--    <link rel="shortcut icon" href="static/image/home.png" type="image/x-icon">-->
+    <link rel="stylesheet" href="js/start/start.css">
+    <script type="module" src="js/start/start.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <style>
+        .people{
+            list-style-type:none;
+            font-size: 30px;
+            font-weight:bold;
+        }
+    </style>
+    <script>
+        let uname=$("#user_name").text();;
+        window.onload=function (ev) {
+            //页面加载完成自动调用这个函数
+            $.ajax({
+                type: "GET",
+                async: false,//设置ajax为同步请求
+                url: "startp.do",
+                data: {
+                    username: uname,//发送姓名
+                },
+                success: function (data) {
+                    data = JSON.parse(data);
+                    //获得排行版对象
+                    let ul=$("#phb");
+                    for (let i = 0; i <data.length ; i++) {
+                        //遍历
+                        //alert("0")
+                        var str=i+1+" ";
+                        //alert("2")
+                        str=str+data[i].username+" ";
+                        //alert("2")
+                        var score=data[i].score+" ";
+                        len=score.length;
+                        //alert("3")
+                        str=str+score;
+                        var addul=$("<li class='people'>"+str+" </li>")
+                        ul.append(addul);
+                        //alert("4");
+                    }
+                }
+            });
+        }
+        function funTeam() {
+            var str="Enter_the_team.do?"+"username="+$("#user_name").text();
+            $.ajax({
+                type: "GET",
+                async: false,//设置ajax为同步请求
+                url: "ifEnter.do",
+                data: {
+                    username: uname,//发送姓名
+                },
+                success: function (data) {
+                    data = JSON.parse(data);
+                        if(data=='yes'){
+                            window.location.href=str;
+                        }else {
+                            alert("房间人数满了");
+                        }
+
+                    },
+                error:function (data) {
+                    alert("出错了")
+                }
+
+
+            });
+        }
+        function fundj() {
+            window.location.href='djs.do'
+        }
+    </script>
+</head>
+<body>
+    <div id="user">
+<!--        <div id="portrait"></div>-->
+        <div id="user_name" th:text="${username}"><span>user_name</span></div>
+        <div id="target">
+            <div id="target_head">今日目标<span>^</span></div>
+            <div id="target_body">
+                <ul>
+                    <li>吃掉30课星星</li>
+                    <li>吃掉5个磁铁</li>
+                    <li>参加5次无尽模式</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="pattern">
+        <div class="endless" onclick="fundj()"><span>无尽模式</span></div>
+        <div class="team" onclick="funTeam()"><span>团队模式</span></div>
+        <div class="evolution" onclick="" ><span>进化模式</span></div>
+        <div class="else" onclick=""><span>其他模式</span></div>
+    </div>
+    <div id="rank">
+        <div class="title"><span>天梯排名</span></div>
+        <div class="list">
+            <ul id="phb">
+
+            </ul>
+        </div>
+    </div>
+<!--    <div id="rank_control">-->
+<!--        <span><</span> -->
+<!--    </div>-->
+</body>
+</html>

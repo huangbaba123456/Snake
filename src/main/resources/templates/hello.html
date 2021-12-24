@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="css/start.css"/>
+    <style type="text/css">
+        body{
+            align-content: center;
+            text-align: center;
+        }
+        #tar{
+            /*display: none;*/
+        }
+        #other{
+            align-content: center;
+            text-align: center;
+        }
+        #username{
+            text-align: center;
+            margin: 0 auto;
+            font-size: 20px;
+        }
+    </style>
+    <script src="js/jquery.min.js"></script>
+    <script>
+        var tarIndex=1;
+        function sleep(n) {
+            var start = new Date().getTime();
+            while(true)  if(new Date().getTime()-start > n) break;
+        }
+        function  funTest() {
+            $.ajax({
+                async: false,//设置ajax为同步请求
+                type:"GET",
+                url:"testajax.do",
+                data:{name:$("#username").text(),value:$("#test1").val(),direct:tarIndex},
+                success:function (data) {
+                    data=JSON.parse(data);
+                    changeDirect();
+                    //alert(data.length);
+                    $("#other").html("");
+                    for (var i = 0; i <data.length ; i++) {
+                        if(data[i].name==$("#username").text()){
+                            $("#test1").val(data[i].value);
+                        }else {
+                            //alert("123");
+                            var span1=$("<span></span>");
+                            // 设置样式
+                            span1.css("color","green");
+                            span1.css("border","1px solid blue");
+                            span1.css("background-color","lightgray")
+                            // 设置文字
+                            var direct;
+                            if(data[i].direct==1){
+                                direct="上"
+                            }else {
+                                if(data[i].direct==2){
+                                    direct="右"
+                                }else {
+                                    if(data[i].direct==3){
+                                        direct="下"
+                                    }else {
+                                        direct="左"
+                                    }
+                                }
+                            }
+                            span1.text("别的用户 name :"+data[i].name+" value : "+data[i].value+" target"+direct);
+                            //alert($("#other"))
+                            $('#other').append(span1)
+                            $("#other").append($("<br>"))
+                        }
+                    }
+                }
+            })
+        }
+        function fun1(){
+            $.ajax({
+                async: false,//设置ajax为同步请求
+                type:"GET",
+                url:"testajax1.do",
+                data:{name:$("#username").text(),value:$("#test1").val()},
+                success:function (data) {
+
+                }
+            })
+        }
+        function fun2(){
+            $.ajax({
+                async: false,//设置ajax为同步请求
+                type:"GET",
+                url:"testajax2.do",
+                success:function (data) {
+                    data=JSON.parse(data);
+                    //alert(data.length);
+                    $("#other").html("");
+                    for (var i = 0; i <data.length ; i++) {
+                        if(data[i].name==$("#username").text()){
+                            $("#test1").val(data[i].value);
+                        }else {
+                            //alert("123");
+                            var span1=$("<span></span>");
+                            // 设置样式
+                            span1.css("color","green");
+                            span1.css("border","1px solid blue");
+                            span1.css("background-color","lightgray")
+                            // 设置文字
+                            span1.text("别的用户 name :"+data[i].name+" value : "+data[i].value);
+                            //alert($("#other"))
+                            $('#other').append(span1)
+                            $("#other").append($("<br>"))
+                        }
+                    }
+                }
+            })
+        }
+        setInterval("funTest()",100);
+        //1 上 2 右 3 下 4 左
+        function  funup() {
+            tarIndex=1;
+        }
+        function fundown() {
+            tarIndex=3;
+        }
+        function funright() {
+            tarIndex=2;
+        }
+        function funleft() {
+            tarIndex=4;
+
+        }
+        function  changeDirect() {
+            if(tarIndex==1){
+                $("#directText").val("上");
+            }else {
+                if(tarIndex==2) {
+                    $("#directText").val("右")
+                }else {
+                    if(tarIndex==3){
+                        $("#directText").val("下");
+                    }else{
+                        $("#directText").val("左");
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div th:if="${username}!=null">
+        <span th:text="${username}" id="username"></span>
+    </div>
+    <br>
+    数据测试自己的value值 : <input type="text" id="test1" value="1">
+    <br>
+    <button onclick="funTest()">测试</button>
+    <br>
+    <div id="other"></div>
+    <br>
+    <button onclick="funup()">上</button>
+    <br>
+    <button onclick="funleft()">左</button> <button onclick="funright()">右</button>
+    <br>
+    <button onclick="fundown()">下</button>
+    <br>
+    <input type="text" id="directText" value="上">
+</body>
+</html>

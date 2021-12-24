@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="css/clock.css"/>
+    <style>
+        #buttonout{
+            /*background-color: rgb(219,112,147);*/
+            background: linear-gradient(to right, rgba(236, 47, 75, 0.8), rgba(0, 159, 255, 0.8));
+            padding-left: 1%;
+            padding-right: 1%;
+            padding-top: 0.5%;
+            padding-bottom: 0.5%;
+            color: rgb(127,255,212);
+            text-align: center;
+            font-style:oblique;
+            vertical-align: middle;
+            font-weight: 900;
+            font-size:125%;
+            border: 0px;
+            border-radius: 10%;
+            opacity: 0.1;
+            margin-left: 20%;
+            transition: all 0.5s;
+            border-radius: 8%;
+            /*box-shadow: 3px 3px 9px gray;*/
+            /*letter-spacing: 2px;*/
+        }
+        #buttonout:hover{
+           opacity: 0.8;
+        }
+        #idv{
+        }
+        #headBU{
+            margin: 0 auto;
+        }
+        .divhead{
+            margin: 10%;
+        }
+        #death{
+            visibility: hidden;
+        }
+        #body{
+            background: linear-gradient(to right, rgba(226, 59, 137, 0.6), rgba(86, 152, 228, 0.6));
+        }
+        #username{
+            margin-right: 100px;
+        }
+        body{
+            width: 100%;
+            height: 100%;
+        }
+        html{
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+            border:0px solid rgb(1,116,183);
+            box-sizing:border-box;
+            border-radius: 7.5%;
+            /*//0 255 255*/
+            /*127,255,212*/
+            box-shadow:3.5px 3.5px 15px 15px rgb(0 255 255) inset;
+        }
+        .otherSnake{
+            background-color: red;
+            position: absolute;
+            left: 5%;
+            top: 5%;
+            width: 2%;
+            height: 0;
+            padding-bottom: 2%;
+        }
+        .otherhead{
+            background-color: white;
+            position: absolute;
+            left: 7%;
+            top: 5%;
+            width: 2%;
+            height: 0;
+            z-index: 1000;
+            font-size:1px;
+            border-radius: 50%;
+            font-weight:bold;
+            text-align: center;
+            padding-top: 0.5%;
+            padding-bottom: 1.5%;
+            display:-ms-flexbox;
+            -ms-flex-align:center;/*混合版本*/
+            z-index: 1000;
+            background-image: url("image/dzb.png");
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+        }
+        .otherbody{
+            background-color: rgb(31,255,80);
+            position: absolute;
+            left: 5%;
+            top: 5%;
+            width: 2%;
+            height: 0;
+            /*padding-bottom: 2%;*/
+            border-radius: 50%;
+            z-index: 500;
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            text-align: center;
+            /*padding-top: 0.5%;*/
+            /*padding-bottom: 1.5%;*/
+            padding-bottom: 2%;
+        }
+        .light{
+            background-image: url("image/southeast2.jpg");
+            /*opacity: 0.75;*/
+            filter: brightness(1);
+        }
+        #curhead{
+            position: absolute;
+            left: 7%;
+            top: 5%;
+            width: 2%;
+            height: 0;
+            z-index: 1000;
+            font-size:100%;
+            border-radius: 50%;
+            font-weight:bold;
+            text-align: center;
+            /*padding-top: 0.5%;*/
+            padding-bottom: 2%;
+            /*border: 0px solid #CA26FF;*/
+
+            display:-ms-flexbox;
+            -ms-flex-align:center;/*混合版本*/
+            /*background-image: image();*/
+            background-image: url("image/hj.png");
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            /*transition: transform 0.005s;*/
+            /*background-color: yellow;*/
+        }
+        #son{
+            position: absolute;
+            margin:  0 auto;
+            border-radius: 100%;
+            width: 8%;
+            padding-bottom: 8%;
+            /*background-color: #FFFFFF;*/
+            /*background-color: red;*/
+            box-shadow: #FFD700 0em 0em 0.9em 0.15em inset;
+            /*#A64DB6*/
+        }
+        .otherZ{
+            position: absolute;
+            margin:  0 auto;
+            border-radius: 100%;
+            width: 8%;
+            padding-bottom: 8%;
+            /*background-color: #FFFFFF;*/
+            /*background-color: red;*/
+            box-shadow: rgb(25,202,173) 0em 0em 0.9em 0.15em inset;
+            /*#A64DB6*/
+            /*.R 25 G 202 B 173 */
+        }
+       .bomb{
+           position: absolute;
+           background-image: url("image/food/bomb.jpg");
+           background-size: 100% auto;
+           background-repeat: no-repeat;
+           width: 3%;
+           height: 0;
+           padding-bottom: 3%;
+           border-radius: 50%;
+           border: 0;
+       }
+        .curBody{
+            /*background-color: white;*/
+            background-color: rgb(253,229,39);
+            position: absolute;
+            left: 5%;
+            top: 5%;
+            width: 2%;
+            height: 0;
+            padding-bottom: 2%;
+            border-radius: 50%;
+            z-index: 500;
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            background-image: url("image/southeast2.jpg");
+
+        }
+        .food{
+            width: 1.5%;
+            height: 0;
+            padding-bottom: 1.5%;
+            border-radius: 50%;
+            position: absolute;
+            z-index: 100;
+            opacity:1;
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            background-color: white;
+            /*box-shadow:0.5px 0.5px 0.5px 0.5px rgb(255 0 255) inset;*/
+            margin: 0;
+        }
+        .divhead{
+            font-size: 150%;
+            color: rgb(255,0,255);
+            text-align: center;
+            font-style:oblique;
+            font-weight: bolder;
+            transition: all 0.5s;
+            /*-webkit-text-stroke: 4px #d6f4f4;*/
+            font-variation-settings: "wght" 900, "ital" 1;
+            font-family: "Meta", sans-serif;
+            cursor: pointer;
+            /*text-shadow: 2px 2px 0px #07bccc, 4px 4px 0px #e601c0, 6px 6px 0px #e9019a,*/
+            /*8px 8px 0px #f40468, 10px 10px 2px #482896;*/
+        }
+        .grass{
+            background-image: url("image/food/grass.jfif");
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            width: 3%;
+            padding-top: 0;
+            padding-left: 0;
+            padding-right: 0;
+            padding-bottom: 3%;
+            z-index: 2000;
+            margin: 0;
+            border-radius: 30%;
+            background-color: red;
+        }
+        #grass1{
+            position: absolute;
+            left: 20%;
+            top: 33%;
+            border-bottom-left-radius: 0%;
+            border-bottom-right-radius: 0%;
+
+        }
+        #grass2{
+            position: absolute;
+            left: 20%;
+            top: 36%;
+            border-radius: 0%;
+        }
+        #grass9{
+            position: absolute;
+            left: 23%;
+            top: 36%;
+            border-bottom-left-radius: 0%;
+            border-top-left-radius: 0%;
+            border-bottom-right-radius: 0%;
+        }
+        #grass10{
+            position: absolute;
+            left: 17%;
+            top: 36%;
+            border-bottom-right-radius: 0%;
+            border-top-right-radius: 0%;
+            border-bottom-left-radius: 0%;
+        }
+        #grass11{
+            position: absolute;
+            left: 23%;
+            top: 39%;
+            border-bottom-left-radius: 0%;
+            border-top-left-radius: 0%;
+            border-top-right-radius: 0%;
+        }
+        #grass12{
+            position: absolute;
+            left: 17%;
+            top: 39%;
+            border-bottom-right-radius: 0%;
+            border-top-right-radius: 0%;
+            border-top-left-radius: 0%;
+        }
+        #grass3{
+            position: absolute;
+            left: 20%;
+            top: 39%;
+            border-radius: 0%;
+        }
+        #grass4{
+            position: absolute;
+            left: 20%;
+            top: 42%;
+            border-top-left-radius: 0%;
+            border-top-right-radius: 0%;
+        }
+        #grass5{
+            position: absolute;
+            left: 77%;
+            top: 33%;
+            border-bottom-left-radius: 0%;
+            border-bottom-right-radius: 0%;
+        }
+        #grass6{
+            position: absolute;
+            left: 77%;
+            top: 36%;
+            border-radius: 0%;
+        }
+        #grass7{
+            position: absolute;
+            left: 77%;
+            top: 39%;
+            border-radius: 0%;
+        }
+        #grass8{
+            position: absolute;
+            left: 77%;
+            top: 42%;
+            border-top-left-radius: 0%;
+            border-top-right-radius: 0%;
+        }
+        #grass13{
+            position: absolute;
+            left: 80%;
+            top: 36%;
+            border-bottom-left-radius: 0%;
+            border-top-left-radius: 0%;
+            border-bottom-right-radius: 0%;
+        }
+        #grass14{
+            position: absolute;
+            left: 74%;
+            top: 36%;
+            border-bottom-right-radius: 0%;
+            border-top-right-radius: 0%;
+            border-bottom-left-radius: 0%;
+        }
+        #grass15{
+            position: absolute;
+            left: 80%;
+            top: 39%;
+            border-bottom-left-radius: 0%;
+            border-top-left-radius: 0%;
+            border-top-right-radius: 0%;
+        }
+        #grass16{
+            position: absolute;
+            left: 74%;
+            top: 39%;
+            border-bottom-right-radius: 0%;
+            border-top-right-radius: 0%;
+            border-top-left-radius: 0%;
+        }
+        .Tunnel{
+            background-image: url("image/food/Tunnel1.jfif");
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            width: 3%;
+            padding-top: 0;
+            padding-left: 0;
+            padding-right: 0;
+            padding-bottom: 3%;
+            z-index: 2000;
+            margin: 0;
+            border-radius: 30%;
+            background-color: red;
+        }
+        #Tunnel1{
+            position: absolute;
+            left: 30%;
+            top: 15%;
+            background-image: url("image/food/Tunnel1.jfif");
+            border-top-left-radius: 50%;
+            border-top-right-radius: 50%;
+        }
+        #Tunnel2{
+            position: absolute;
+            left: 67%;
+            top: 82%;
+            background-image: url("image/food/Tunnel1.jfif");
+            border-top-left-radius: 50%;
+            border-top-right-radius: 50%;
+        }
+        #Tunnel3{
+            border-top-left-radius: 50%;
+            border-top-right-radius: 50%;
+            position: absolute;
+            left: 30%;
+            top: 82%;
+            background-image: url("image/food/Tunnel2.jpg");
+        }
+        #Tunnel4{
+            background-image: url("image/food/Tunnel2.jpg");
+            border-top-left-radius: 50%;
+            border-top-right-radius: 50%;
+            position: absolute;
+            left: 67%;
+            top: 15%;
+        }
+        .wall{
+            background-image: url("image/food/qian.png");
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            width: 3%;
+            padding-bottom: 3%;
+            /*background-color: yellow;*/
+            z-index: 2000;
+        }
+        #wall1{
+            position: absolute;
+            left: 43.5%;
+            top: 10%;
+        }
+        #wall2{
+            position: absolute;
+            left: 46.5%;
+            top: 10%;
+        }
+        #wall3{
+            position: absolute;
+            left: 49.5%;
+            top: 10%;
+        }
+        #wall4{
+            position: absolute;
+            left: 52.5%;
+            top: 10%;
+        }
+        #wall5{
+            position: absolute;
+            left: 43.5%;
+            top: 87%;
+        }
+        #wall6{
+            position: absolute;
+            left: 46.5%;
+            top: 87%;
+        }
+        #wall7{
+            position: absolute;
+            left: 49.5%;
+            top: 87%;
+        }
+        #wall8{
+            position: absolute;
+            left: 52.5%;
+            top: 87%;
+        }
+    </style>
+    <script src="js/jquery.min.js"></script>
+    <!--导入hashMap-->
+    <script src="js/HashMapjs.js"></script>
+    <!--导入hashSet-->
+    <script src="js/hashSet.js"></script>
+    <script>
+        var ctW;
+        var iFChi=false;
+        var speed=0;
+        //是否是第一次传输;
+        var tarIFfirst=1;
+        var width;
+        var height;
+        var temp;
+        var tarTop;
+        var tarLeft;
+        var tarDirect=2;
+        var widthBody;
+        var heightBody;
+        var otherLeft;
+        var otherTop;
+        var tarsurvival=0;//表示存活着
+        var uName;
+        var handle;
+        var  userMap=new HashMap();//自定义map
+        var arr=[];
+        var indexArr=0;
+        var gtartar=0;
+        var radio;
+        var monsterArr=[];
+        window.onload=function (ev) {
+            var j=0;
+            for (var i=0;i<=1;i+=1){
+                arr[j]=i;
+                j++;
+            }
+            var body=$("html");
+            widthBody=body.width();
+            heightBody=body.height();
+            ctW=widthBody/12.5;
+            radio=widthBody/heightBody;
+            //var head=$("#curhead");
+            var head=$("<div id='curhead'></div>")
+            //alert($("#username").text()[0]);
+            // head.text("" + $("#username").text()[0]);
+            var headIndexX=Math.random()*widthBody;//随机位置
+            var headIndexY=Math.random()*heightBody;
+            var divOffset = {left:headIndexX, top: headIndexY};
+            head.offset(divOffset);
+            $("#body").append(head);
+            //百分之换算
+            headIndexX=100*headIndexX/widthBody;
+            headIndexY=100*headIndexY/heightBody;
+            tarLeft =headIndexX;
+            tarTop=headIndexY;
+            width=head.width();
+            height=width;
+            uName=$("#username").text();
+            var divList=[];
+            divList[0]=head;
+            userMap.put(uName,divList);
+            //var curBody=$(".curBody");
+            // otherLeft=headIndexX-width;
+            // otherTop=headIndexY;
+            // divOffset={ left:otherLeft,top : otherTop};
+            // curBody.offset(divOffset);
+            $("html")[0].onkeydown=function (e) {
+                switch (e.keyCode) {
+                    case 87:
+                        tarDirect=1;
+                        //向上
+                        $("#curhead").css("transform","rotate("+0+"deg)");
+                        break;
+                    case 68:
+                        tarDirect=2;
+                        $("#curhead").css("transform","rotate("+90+"deg)");
+                        break;
+                    case 83:
+                        tarDirect=3;
+                        $("#curhead").css("transform","rotate("+180+"deg)");
+                        break;
+                    case 65:
+                        tarDirect=4;
+                        $("#curhead").css("transform","rotate("+270+"deg)");
+                        break;
+                    case 81:
+                        if(speed==1){
+                            speed=0;
+                        }else {
+                            speed=1;
+                        }
+                        if(gtartar==0){
+                            gtartar=1;
+                            // $(".curBody").css("background-image","url(image/southeast2.jpg)");
+                            // $("#curhead").css("background-image","url(image/liao.png)")
+                            $(".curBody").css("background-image","url(image/dog_body.png)");
+                            $("#curhead").css("background-image","url(image/dog_head.png)");
+                            //$("#curhead").css("background-color","none");
+                        }else {
+                            gtartar=0;
+                             $(".curBody").css("background-image","url(image/southeast2.jpg)");
+                             $("#curhead").css("background-image","url(image/hj.png)");
+                          //  $("#curhead").css("background-color","white");
+                        }
+                        break;
+                    case 69:
+                        //我们先得到头节点的坐标
+                        if(!iFChi) {
+                            iFChi=true;
+                        }else {
+                            iFChi=false;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            handle=setInterval("funTest()",10);
+        }
+        window.onresize = function(){
+            var body=$("html");
+            widthBody=body.width();
+            heightBody=body.height();
+            ctW=widthBody/12.5;
+            radio=widthBody/heightBody;
+            $.ajax({
+                    type: "GET",
+                    async: true,//设置ajax为同步请求
+                    url: "screen.change",
+                    data: {
+                        username: uName,//发送姓名
+                        radio:radio
+                    },
+                    success: function (data) {
+
+                    },
+                    error:function () {
+                        alert("456");
+                    }
+                }
+            );
+        }
+        //window.onload = funcTest;
+        function addFood(foodList) {
+            //遍历map
+            var foodDiv=$(".food");
+          //  var indexI=0;
+            foodDiv.remove();
+            for(var i=0;i<foodList.length;i++){
+                // if(indexI<foodDiv.length){
+                //     var divOffset = {left: foodMap[name].x * widthBody / 100, top: foodMap[name].y * heightBody / 100};
+                //     $(foodDiv[indexI]).offset(divOffset);
+                //     indexI++;
+                // }else {
+                    var addfood = $("<div class='food'></div>");
+                    var divOffset = {left: foodList[i].x * widthBody / 100, top: foodList[i].y * heightBody / 100};
+                    addfood.offset(divOffset);
+                    //设置舍食物颜色
+                    var strFood="image/food/food";
+                    // var valueFood=Math.floor(Math.random()*3);
+                    // valueFood++;
+                    // $(".curBody").css("background-image","url(image/)");
+                    strFood=strFood+foodList[i].id;
+                    addfood.css("background-image","url("+strFood+".png)");
+                    $("#body").append(addfood);
+                //}
+            }
+        }
+        function funTest() {
+            if ($("#death").val() == '存活') {
+                var username = uName;
+                if (tarIFfirst == 1) {
+                    //第一次发送请求
+                    $.ajax({
+                        type: "GET",
+                        async: false,//设置ajax为同步请求
+                        url: "first.do",
+                        data: {
+                            username: username,
+                            direct: tarDirect,
+                            tarLeft: tarLeft,
+                            tarTop: tarTop,
+                            radio:radio
+                            //width: width,
+                            //height: height,
+                            //widthBody: widthBody,
+                            //heightBody: heightBody,
+                            //otherLeft: otherLeft,
+                            //otherTop: otherTop
+                        },
+                        success: function (data) {
+                            // $("div").remove(".Snake");
+                            data = JSON.parse(data);
+                            addFood(data.foodList);
+                            //显示蛇身体
+                            var hashmap = data.hashMap;
+                            //显示怪物
+                            var monList=data.monsterLinkedList;
+                            for (var i=0;i<monList.length;i++) {
+                                monsterArr[i]=$("<div class='bomb'></div>");
+                                var divOffset = {
+                                    left: (monList[i].x) * widthBody/100,
+                                    top: (monList[i].y) * heightBody/100
+                                };
+                                monsterArr[i].offset(divOffset);
+                                $("#body").append(monsterArr[i]);
+                            }
+                            //alert(hashmap);
+                            for (var name in hashmap) {
+                                //得到蛇对象
+                                if (name ==uName) {
+                                    //如果是自己的蛇
+                                    var divList=userMap.get(name);
+                                    var snake=hashmap[name];
+                                    var snakeBody = snake.snakeBody;
+                                    for(var i=1;i<snakeBody.length;i++){
+                                        var divOffset = {
+                                            left: (snakeBody[i].tarLeft) * widthBody/100,
+                                            top: (snakeBody[i].tarTop) * heightBody/100
+                                        };
+                                        divList[i]=$("<div class='curBody'></div>");
+                                        divList[i].offset(divOffset);
+                                        $("#body").append(divList[i]);
+                                    }
+                                    //userMap.put(uName,divList);//存入里面
+                                } else {
+                                    //不是自己，给它也上蛇
+                                    var divList=[];
+                                    var snake=hashmap[name];
+                                    var snakeBody = snake.snakeBody;
+                                    for(var i=0;i<snakeBody.length;i++){
+                                        var divOffset = {
+                                            left: (snakeBody[i].tarLeft ) * widthBody/100,
+                                            top: (snakeBody[i].tarTop ) * heightBody/100
+                                        };
+                                        if(i==0) {
+                                            divList[i] = $("<div class='otherhead'></div>");
+                                        }else {
+                                            divList[i]=$("<div class='otherbody'></div>");
+                                        }
+                                        divList[i].offset(divOffset);
+                                        $("#body").append(divList[i]);
+                                    }
+                                    userMap.put(name,divList);
+                                }
+                            }
+                        }
+                    })
+                } else {
+                    //后期发送请求
+                    $.ajax({
+                        type: "GET",
+                        async: false,//设置ajax为同步请求
+                        url: "after.do",
+                        data: {
+                            username: username,//发送姓名
+                            tar: tarDirect,//发送方向
+                            speed:speed,
+                            H:iFChi//false 代表没开启.
+                        },
+                        success: function (data) {
+                            var tarS = 0;//表示是否存活
+                            // $("div").remove(".Snake");
+                            data = JSON.parse(data);
+                            if(!data.isF){
+                                data=data.smallMap;
+                                if(data==null){
+                                    alert('你挂了');
+                                    var score=$("#score").text();
+                                    clearInterval(handle);
+                                    window.location.href="end.do?username="+uName+"&score="+score;
+                                }
+                            if(!data.isH){
+                                //直接结束
+                                return;
+                            }
+                            //得到小数据
+                            //var listName=data.removeName;
+                            //移除里面的sb
+                            // for(var i=0;i<listName.length;i++){
+                            //     if(listName[i]==uName){
+                            //         //直接挂了
+                            //         alert('你挂了');
+                            //         var score=$("#score").text();
+                            //         clearInterval(handle);
+                            //         window.location.href="end.do?username="+uName+"&score="+score;
+                            //     }
+                            //     var list=userMap.get(listName[i]);
+                            //     if(list!=null) {
+                            //         for (var j = 0; j < list.length; j++) {
+                            //             list[j].remove();
+                            //         }
+                            //         userMap.remove(listName[i]);
+                            //     }
+                            // }
+                            //我们先造出hashSet
+                                //更新炸弹信息
+                                var monList=data.monsterLinkedList;
+                                for (var i=0;i<monList.length;i++) {
+                                    //monsterArr[i]=$("<div class='bomb'></div>");
+                                    var divOffset = {
+                                        left: (monList[i].x) * widthBody/100,
+                                        top: (monList[i].y) * heightBody/100
+                                    };
+                                    monsterArr[i].offset(divOffset);
+                                    $("#body").append(monsterArr[i]);
+                                }
+                            var nameSet=new HashSet();//得到set
+                            var map_new=data.map_new;
+                            var divHashMap=data.divHashMap;
+                            for (var name in map_new) {
+                                    nameSet.add(name);
+                            }
+                            //遍历得到的
+                            for (var name in divHashMap) {
+                                nameSet.add(name);
+                            }
+                            //遍历我们的那个用户map
+                             //得到set集合
+                            var set=userMap.keySet();
+                            for (var i=0;i<set.length;i++){
+                                //遍历集合
+                                if(!nameSet.contains(set[i])){
+                                    //这个随便要被移除了
+                                    var divList=userMap.get(set[i]);
+                                    for (var j = 0; j < divList.length; j++) {
+                                        $(divList[j]).remove();
+                                    }
+                                    userMap.remove(set[i]);
+                                }
+                            }
+                            //展现食物
+                            addFood(data.foodList);
+                                $(".otherZ").remove();
+                                $("#son").remove();
+                            //我们先遍历新加入的蛇
+                           var map_new=data.map_new;
+                            for (var name in map_new) {
+                                if(name==uName){
+                                    tarS=1;
+                                }
+                                //console.log('123');
+                                //不可能是自己
+                                // var bodyName = "body" + name;
+                                // var headName = "head" + name;
+                                if(!userMap.containsKey(name)){
+                                    var divList=[];
+                                    var snakeBody=map_new[name].snakeBody;
+                                    var snake=map_new[name];
+                                    for (var i=0;i<snakeBody.length;i++){
+                                        if (i == 0) {
+                                            var head = $("<div class='otherhead'></div>");
+                                            var divOffset = {
+                                                left: (snakeBody[i].tarLeft) * widthBody/100,
+                                                top: (snakeBody[i].tarTop ) * heightBody/100
+                                            };
+                                            head.offset(divOffset);
+                                            $("#body").append(head);
+                                            divList[i]=head;
+                                            //判断这sb蛇是不是开了磁铁
+                                            if(snake.i==2) {
+                                                var son=$("<div class='otherZ'></div>");
+                                                var width1=divList[i].width();
+                                                var height1=width1;
+                                                //开启了
+                                                var cenX=divList[i].offset().left+width1/2;
+                                                var cenY=divList[i].offset().top+height1/2;
+                                                width1 = ctW;
+                                                height1 = width1;
+                                                var divOffset = {
+                                                    left: cenX - width1 / 2,
+                                                    top: cenY - height1 / 2
+                                                };
+                                                son.offset(divOffset)
+                                                $("#body").append(son);
+                                            }
+                                        } else {
+                                            var addDiv=$("<div class='otherbody'></div>");
+                                            var divOffset = {
+                                                left: (snakeBody[i].tarLeft ) * widthBody/100,
+                                                top: (snakeBody[i].tarTop ) * heightBody/100
+                                            };
+                                            addDiv.offset(divOffset);
+                                            divList[i]=addDiv;
+                                            $("#body").append(divList[i]);
+                                        }
+                                    }
+                                    userMap.put(name,divList);
+                                }else {
+                                    //alert('你提前显示了你的对手');
+                                }
+                            }
+                            //处理已经有的蛇
+
+                            var divHashMap=data.divHashMap;
+                            for (var name in divHashMap) {
+                                if(name==uName){
+                                    tarS=1;
+                                }
+                               //alert(divHashMap.contains(name));
+                                //map里面必有
+                                //console.log('zj');
+                                if(userMap.containsKey(name)){
+                                    //得到原本的集合；
+                                    var headDiv_java=divHashMap[name];//
+                                    var i=0;
+                                    var beforeleft=0;
+                                    var beforetop=0;
+                                    var divList=userMap.get(name);
+                                    //我们先清除别的蛇的磁铁
+                                    for (i=0;i<divList.length;i++){
+                                        if(i==0){
+                                            var divOffset = {
+                                                left: headDiv_java.starLeft * widthBody/100,
+                                                top:headDiv_java.starTop * heightBody/100
+                                            };
+                                            divList[i].offset(divOffset);
+                                            beforeleft=divList[i].offset().left;
+                                            beforetop=divList[i].offset().top;
+                                            if(headDiv_java.H){
+                                                var width1=divList[i].width();
+                                                var height1=divList[i].width();
+                                                //开启了
+                                                var cenX=beforeleft+width1/2;
+                                                var cenY=beforetop+height1/2;
+                                                //得到环的那个那个
+                                                var son;
+                                                if(name==uName){
+                                                    son=$("<div id='son'></div>");
+                                                }else {
+                                                    son=$("<div class='otherZ'></div>")
+                                                }
+                                                if(uName==name) {
+                                                        width1 =ctW;
+                                                        height1 = width1;
+                                                        var divOffset = {
+                                                            left: cenX - width1 / 2,
+                                                            top: cenY - height1 / 2
+                                                        };
+                                                        // console.log(width1+" -- "+height1);
+                                                        // console.log(cenX+" "+cenY);
+                                                        son.offset(divOffset);
+                                                        $("#body").append(son);
+                                                }else {
+                                                    width1 = ctW;
+                                                    height1 = ctW;
+                                                    var divOffset = {
+                                                        left: cenX - width1 / 2,
+                                                        top: cenY - height1 / 2
+                                                    };
+                                                    son.offset(divOffset)
+                                                    $("#body").append(son);
+                                                }
+                                            }
+                                        }else {
+                                            var divOffset = {
+                                                left:beforeleft,
+                                                top:beforetop
+                                            };
+                                            beforeleft=divList[i].offset().left;
+                                            beforetop=divList[i].offset().top;
+                                            divList[i].offset(divOffset);
+                                        }
+                                    }
+                                    var cha=headDiv_java.count-i;//差几个
+                                    for (var j=0;j<cha;j++){
+                                        var addDiv;
+                                        if(name==uName){
+                                            addDiv = $("<div class='curBody'></div>");
+                                            if(gtartar==1){
+                                                addDiv.css("background-image","url(image/dog_body.png)");
+                                            }
+                                        }else {
+                                            addDiv = $("<div class='otherbody'></div>");
+                                        }
+                                        var divOffset = {
+                                            left:beforeleft,
+                                            top:beforetop
+                                        };
+                                        divList[i]=addDiv;
+                                        divList[i].offset(divOffset);
+                                        $("#body").append(divList[i]);
+                                        i++;
+                                    }
+                                }else {
+                                    //alert("数据同步错误，你没有显示你的对手")
+                                    //这个时候也要继续加入蛇
+
+                                }
+
+                            }
+                            if (tarS == 0) {
+                                //煞笔蛇已经挂了
+                                //alert(tarS);
+                                var r=confirm("你挂了，请退出");
+                                if (r||r)
+                                {
+                                    var score=$("#score").text();
+                                    clearInterval(handle);
+                                    window.location.href="end.do?username="+uName+"&score="+score;
+                                }
+                            }
+                            var divList=userMap.get(uName);
+                            $("#score").text(divList.length);
+                            }else {
+                                //修正
+                                var tarS=0;
+                                console.log("修正数据");
+                                data=data.mapSnake;
+                                $("#son").remove();
+                                $(".otherZ").remove();
+                                //这个时候不需要去清除死亡的蛇了，因为传过来的map里面没有挂的蛇
+                                // var listName=data.removeName;
+                                // //移除里面的sb
+                                // for(var i=0;i<listName.length;i++){
+                                //     if(listName[i]==uName){
+                                //         //直接挂了
+                                //         alert('你挂了');
+                                //         var score=$("#score").text();
+                                //         clearInterval(handle);
+                                //         window.location.href="end.do?username="+uName+"&score="+score;
+                                //     }
+                                //     var list=userMap.get(listName[i]);
+                                //     if(list!=null) {
+                                //         for (var j = 0; j < list.length; j++) {
+                                //             list[j].remove();
+                                //         }
+                                //         userMap.remove(listName[i]);
+                                //     }
+                                // }
+                                //跟新炸弹
+                                var monList=data.monsterLinkedList;
+                                for (var i=0;i<monList.length;i++) {
+                                    //monsterArr[i]=$("<div class='bomb'></div>");
+                                    var divOffset = {
+                                        left: (monList[i].x) * widthBody/100,
+                                        top: (monList[i].y) * heightBody/100
+                                    };
+                                    monsterArr[i].offset(divOffset);
+                                    $("#body").append(monsterArr[i]);
+                                }
+                                addFood(data.foodList);
+                                //移除那个sb磁铁
+
+                                //显示蛇身体
+                                //首先我们先清空map
+                                var keyArr=userMap.keySet();
+                                for (var i=0;i<keyArr.length;i++){
+                                    var divList=userMap.get(keyArr[i]);
+                                    for (var j = 0; j <divList.length ; j++) {
+                                        divList[j].remove();
+                                    }
+                                }
+                                userMap=new HashMap();//直接更新
+                                var hashmap = data.hashMap;
+                                //alert(hashmap);
+                                for (var name in hashmap) {
+                                    //得到蛇对象
+                                    if (name ==uName) {
+                                        //如果是自己的蛇
+                                        tarS=1;
+                                        var divList=[];
+                                        var snake=hashmap[name];
+                                        var snakeBody = snake.snakeBody;
+                                        for(var i=0;i<snakeBody.length;i++){
+                                            var divOffset = {
+                                                left: (snakeBody[i].tarLeft) * widthBody/100,
+                                                top: (snakeBody[i].tarTop ) * heightBody/100
+                                            };
+                                            if(i!=0) {
+                                                divList[i] = $("<div class='curBody'></div>");
+                                                if(gtartar==1){
+                                                    divList[i].css("background-image","url(image/dog_body.png)");
+                                                }
+                                            }else {
+                                                divList[i] = $("<div id='curhead'></div>");
+                                                if(gtartar==1){
+                                                    divList[i].css("background-image","url(image/dog_head.png)")
+                                                }
+                                                divList[i].offset(divOffset);
+                                                if(snake.i==2){
+                                                    //开启磁铁
+                                                    var son=$("<div id='son'></div>");
+                                                    var width1=divList[i].width();
+                                                    var height1=divList[i].height();
+                                                    //开启了
+                                                    var cenX=divList[i].offset().left+width1/2;
+                                                    var cenY=divList[i].offset().top+height1/2;
+                                                    width1 = ctW;
+                                                    height1 = ctW;
+                                                    var divOffset = {
+                                                        left: cenX - width1 / 2,
+                                                        top: cenY - height1 / 2
+                                                    };
+                                                    son.offset(divOffset)
+                                                    $("#body").append(son);
+                                                }
+                                            }
+                                            $("#body").append(divList[i]);
+                                        }
+                                        userMap.put(uName,divList);//存入里面
+                                    } else {
+                                        //不是自己，给它也上蛇
+                                        var divList=[];
+                                        var snake=hashmap[name];
+                                        var snakeBody = snake.snakeBody;
+                                        for(var i=0;i<snakeBody.length;i++){
+                                            var divOffset = {
+                                                left: (snakeBody[i].tarLeft) * widthBody/100,
+                                                top: (snakeBody[i].tarTop) * heightBody/100
+                                            };
+                                            if(i==0) {
+                                                divList[i] = $("<div class='otherhead'></div>");
+                                                divList[i].offset(divOffset);
+                                                if(snake.i==2){
+                                                    //开启磁铁
+                                                    var son=$("<div class='otherZ'></div>");
+                                                    var width1=divList[i].width();
+                                                    var height1=divList[i].height();
+                                                    //开启了
+                                                    var cenX=divList[i].offset().left+width1/2;
+                                                    var cenY=divList[i].offset().top+height1/2;
+                                                    width1 =ctW;
+                                                    height1 = ctW;
+                                                    var divOffset = {
+                                                        left: cenX - width1 / 2,
+                                                        top: cenY - height1 / 2
+                                                    };
+                                                    son.offset(divOffset)
+                                                    $("#body").append(son);
+                                                }
+                                            }else {
+                                                divList[i]=$("<div class='otherbody'></div>");
+                                                divList[i].offset(divOffset);
+                                            }
+                                            $("#body").append(divList[i]);
+                                        }
+                                        userMap.put(name,divList);
+                                    }
+                                }
+                                if (tarS == 0) {
+                                    //煞笔蛇已经挂了
+                                    //alert(tarS);
+                                    var r=confirm("你挂了，请退出");
+                                    if (r||r)
+                                    {
+                                        var score=$("#score").text();
+                                        clearInterval(handle);
+                                        window.location.href="end.do?username="+uName+"&score="+score;
+                                    }
+                                }
+                                var divList=userMap.get(uName);
+                                $("#score").text(divList.length);
+                            }
+                        }
+                    })
+                }
+                tarIFfirst = 0;
+            }
+            //fun1();
+          //   if(indexArr>arr.length){
+          //       indexArr=0;
+          //   }
+          // // $(".curBody").css({ 'opacity' : arr[indexArr] });
+          //   $(".curBody").addClass("light");
+          //   indexArr++;
+        }
+        function signout() {
+            //退出时先告诉后台你走人了
+            $.ajax({
+                type: "GET",
+                async: false,//设置ajax为同步请求
+                url: "active_exit.do",
+                data: {
+                    username:uName
+                },
+                success: function (data) {
+
+                }
+            });
+            //
+            var score=$("#score").text();
+            clearInterval(handle);
+            window.location.href="end.do?username="+uName+"&score="+score;
+        }
+    </script>
+</head>
+<body id="body">
+<!--<div th:if="${username}!=null" id="hdiv">-->
+<!--    <span th:text="${username}" id="username" class="divhead"></span> <span class="text divhead">积分:</span><span id="score">2</span><input id="buttonout" type="button" value="退出游戏" onclick="signout()">-->
+<!--</div>-->
+<div th:if="${username}!=null" id="headBU">
+    <span th:text="${username}" id="username" class="divhead"></span> <span class="text divhead">积分:</span><span id="score" class="divhead">16</span><input id="buttonout" type="button" value="退出游戏" onclick="signout()">
+</div>
+
+    <div id="grass1" class="grass"></div>
+    <div id="grass2" class="grass"></div>
+    <div id="grass3" class="grass"></div>
+    <div id="grass4" class="grass"></div>
+    <div id="grass9" class="grass"></div>
+    <div id="grass10" class="grass"></div>
+    <div id="grass11" class="grass"></div>
+    <div id="grass12" class="grass"></div>
+
+    <div id="grass5" class="grass"></div>
+    <div id="grass6" class="grass"></div>
+    <div id="grass7" class="grass"></div>
+    <div id="grass8" class="grass"></div>
+
+    <div id="grass13" class="grass"></div>
+    <div id="grass14" class="grass"></div>
+    <div id="grass15" class="grass"></div>
+    <div id="grass16" class="grass"></div>
+
+    <div class="Tunnel" id="Tunnel1"></div>
+    <div class="Tunnel" id="Tunnel2"></div>
+    <div class="Tunnel" id="Tunnel3"></div>
+    <div class="Tunnel" id="Tunnel4"></div>
+<!--        <div class="food"  style="width: 100px;height: 100px" ></div>-->
+<!--<div class="curBody"></div>-->
+<div class="wall" id="wall1"></div>
+<div class="wall" id="wall2"></div>
+<div class="wall" id="wall3"></div>
+<div class="wall" id="wall4"></div>
+<div class="wall" id="wall5"></div>
+<div class="wall" id="wall6"></div>
+<div class="wall" id="wall7"></div>
+<div class="wall" id="wall8"></div>
+<input type="text" value="存活" id="death">
+<div></div>
+</body>
+</html>

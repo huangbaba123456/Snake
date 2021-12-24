@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="css/start.css"/>
+    <style>
+    </style>
+    <script src="js/jquery.min.js"></script>
+    <script>
+        function fun1() {
+            alert("123");
+            window.location.href="Enter_the_team.do?username="+$("#nameU").text();
+            alert("456")
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="login-wrapper">
+        <div class="header">Login</div>
+        <div class="form-wrapper">
+            <div th:if="${username}==null">
+            <div th:if="${password}==null">
+            <form method="POST" action='test.do'>
+                <input type="text" name="username" placeholder="username" class="input-item" id="nameU">
+                <br>
+                <input type="text" name="password" placeholder="password" class="input-item">
+                <br>
+                <input type="submit" value="登入" class="button_submit">
+<!--                <br>-->
+<!--                <button onclick="fun1()"> 进入手机端联机模式</button>-->
+            </form>
+            </div>
+            </div>
+            <div th:if="${username}!=null">
+                <div th:if="${password}!=null">
+                    <form method="POST" action='test.do'>
+                        <input type="text" name="username" th:value="${username}" placeholder="username" class="input-item">
+                        <br>
+                        <input type="text" name="password" th:value="${password}" placeholder="password" class="input-item">
+                        <br>
+<!--                        <button class="btn">Login</button>-->
+                        <input type="submit" value="登入" class="button_submit">
+<!--                        <br>-->
+<!--                        <button onclick="fun1()"> 进入手机端联机模式</button>-->
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="msg">
+            Don`t have account ? <a href="#">Sign up</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

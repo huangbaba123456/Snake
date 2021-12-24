@@ -1,0 +1,192 @@
+#clock_outer_div{
+    //background-image: url("../image/R-C.jpg");
+    /*要改大小的话，直接在这里改这个外部div的大小，里面子div我设置的是相对大小，会根据父div的大小自动调整*/
+    width: 40%;/*要保证width 和height相同*/
+    height:0;
+    padding-bottom: 40%;
+    margin: 0 auto;/*设置居中，不居中把它删了*/
+    position: relative;/*相对自身定位*/
+    background-repeat:no-repeat;
+    background-position:center;
+}
+#clock_dish{
+    width: 70%;
+    height: 70%;
+    /*background-color: cyan;*/
+    border:  gray solid 4px;
+    border-radius: 100%;
+    /*background-color: gray;*/
+    position: absolute;
+    top: 15%;
+    left: 15%;
+}
+#point{
+    width: 5%;
+    height: 5%;
+    border-radius: 100%;
+    background-color: white;
+    position: absolute;
+    left: 47.5%;
+    top: 47.5%;
+}
+#scale_3{
+    position: absolute;
+    top: 35%;
+    left: 900%;
+    transform: translate(0px, 0px) rotate(0deg);
+    width: 140%;
+    height: 35%;
+}
+#scale_9{
+    transform: translate(0px, 0px) rotate(0deg);
+    width: 140%;
+    height: 35%;
+    position: absolute;
+    top: 35%;
+    right: 900%;
+}
+#scale_12{
+    width: 35%;
+    height: 140%;
+    position: absolute;
+    right: 35%;
+    top: 900%;
+}
+#scale_6{
+    width: 35%;
+    height: 140%;
+    position: absolute;
+    right: 35%;
+    bottom: 900%;
+}
+#scale_1{
+    width: 120%;
+    height: 30%;
+    position: absolute;
+    right: -440%;/*88%*/
+    top: -762.08%;
+    transform: translate(0%,0%) rotate(120deg);
+}
+#scale_2{
+    width: 120%;
+    height: 30%;
+    position: absolute;
+    top: -440%;/*88%*/
+    right: -762.08%;
+    transform: translate(0%,0%) rotate(150deg);
+}
+#scale_4{
+    width: 120%;
+    height: 30%;
+    transform: translate(0%,0%) rotate(210deg);
+    position: absolute;
+    top: 470%;/*88%*/
+    right: -814.04%;
+}
+#scale_5{
+    width: 120%;
+    height: 30%;
+    transform: translate(0%,0%) rotate(240deg);
+    position: absolute;
+    right: -470%;/**/
+    top: 814.04%;/*866*/
+}
+#scale_7{
+    width: 120%;
+    height: 30%;
+    transform: translate(0%,0%) rotate(300deg);
+    position: absolute;
+    right: 470%;/**/
+    top: 814.04%;/*866*/
+}
+#scale_8{
+    width: 120%;
+    height: 30%;
+    transform: translate(0%,0%) rotate(330deg);
+    position: absolute;
+    top: 460%;/*88%*/
+    right: 796.72%;
+}
+#scale_10{
+    width: 120%;
+    height: 30%;
+    transform: translate(0%,0%) rotate(390deg);
+    position: absolute;
+    top: -440%;/*88%*/
+    right: 762.08%;
+}
+#scale_11{
+    width: 120%;
+    height: 30%;
+    transform: translate(0%,0%) rotate(420deg);
+    position: absolute;
+    right: 440%;/*88%*/
+    top: -762.08%;
+}
+.scale{
+    background-color: red;
+}
+.primary{
+    background-color: orangered;
+}
+#tour_point{
+    width: 40%;
+    height: 400%;
+    background-color: whitesmoke;
+    border-bottom-right-radius: 100%;
+    border-bottom-left-radius: 100%;
+    position: absolute;
+    left: 30%;
+    top: 50%;
+    z-index: 50;
+    border: seagreen dashed 0.5px;
+    transform-origin:  center top;
+}
+#minute_point{
+    width: 20%;
+    height: 700%;
+    background-color: whitesmoke;
+    border-bottom-right-radius: 100%;
+    border-bottom-left-radius: 100%;
+    position: absolute;
+    left: 40%;
+    top: 50%;
+    z-index: 100;
+    border: seagreen dashed 0.5px;
+    transform-origin: center top;
+}
+#sex_point{
+    width: 10%;
+    height: 1000%;
+    background-color: whitesmoke;
+    border-bottom-right-radius: 100%;
+    border-bottom-left-radius: 100%;
+    position: absolute;
+    left: 45%;
+    top: 50%;
+    z-index: 200;
+    border: seagreen dashed 0.5px;
+    transform-origin: center top;
+}
+#temp{
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: white;
+    border-radius: 100%;
+    position: absolute;
+}
+#temp{
+    background-image: url("../image/clock.jpg");
+    background-repeat:no-repeat;
+    background-position:center;
+}
+.dish{
+    box-shadow: darkgrey 0px 0px 90px 15px inset;//边框内阴影
+}
+.point{
+    box-shadow: darkgrey 10px 10px 30px 5px ;
+}
+.all{
+    background-color: whitesmoke;
+}
